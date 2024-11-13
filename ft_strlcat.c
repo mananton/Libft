@@ -3,30 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mananton <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mananton <telesmanuel@hotmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 10:25:44 by mananton          #+#    #+#             */
-/*   Updated: 2024/10/30 10:36:39 by mananton         ###   ########.fr       */
+/*   Updated: 2024/11/13 09:32:07 by mananton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include "libft.h"
 
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
 	size_t	src_len;
 	size_t	dst_len;
+	size_t	i;
 
 	src_len = ft_strlen(src);
 	dst_len = ft_strlen(dst);
-	if (dst_len >= size)
-		dst_len = size;
-	if (dst_len == size)
+	if (size == 0)
+		return (src_len);
+	else if (size <= dst_len)
 		return (size + src_len);
-	if (src_len < size - dst_len)
-		ft_memcpy(dst + dst_len, src, src_len + 1);
-	else
-		ft_memcpy(dst + dst_len, src, size - dst_len - 1);
-	dst[size - 1] = '\0';
+	i = 0;
+	while (src[i] != '\0' && (dst_len + i) < (size - 1))
+	{
+		dst[dst_len + i] = src[i];
+		i++;
+	}
+	dst[dst_len + i] = '\0';
 	return (dst_len + src_len);
 }

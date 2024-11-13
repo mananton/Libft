@@ -3,61 +3,87 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mananton <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mananton <telesmanuel@hotmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 13:58:21 by mananton          #+#    #+#             */
-/*   Updated: 2024/11/08 11:36:09 by mananton         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:05:30 by mananton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include "libft.h"
 
-static size_t	ft_countwords(const char *s, char c)
+static size_t	ft_countword(char const *s, char c)
 {
-	size_t	res;
+	size_t	count;
 
-	res = 0;
+	if (!*s)
+		return (0);
+	count = 0;
 	while (*s)
 	{
-		if (*s != c)
-		{
-			++res;
-			while (*s && *s != c)
-				++s;
-		}
-		else
-			++s;
+		while (*s == c)
+			s++;
+		if (*s)
+			count++;
+		while (*s != c && *s)
+			s++;
 	}
-	return (res);
+	return (count);
 }
 
-char	**ft_split(const char *s, char c)
+static void	free_strings(char **strings, int count)
 {
-	char	**res;
-	size_t	i;
-	size_t	len;
+	int	i;
 
-	if (!s)
+	i = 0;
+	while (i < count)
+	{
+		free (strings[i]);
+		i ++;
+	}
+	free (strings);
+}
+
+static int	words(char **strings, const char **s, char c, size_t *i)
+{
+	const char	*word_start;
+
+	word_start = *s;
+	while (**s != c && **s)
+		(*s)++;
+	strings[*i] = ft_substr(word_start, 0, *s - word_start);
+	if (!strings[*i])
+	{
+		free_strings(strings, *i);
+		return (0);
+	}
+	(*i)++;
+	return (1);
+}
+
+char	**ft_split(char const *s, char c)
+{
+	char	**strings;
+	size_t	i;
+
+	strings = (char **)malloc((ft_countword(s, c) + 1) * sizeof(char *));
+	if (!s || !strings)
 		return (0);
 	i = 0;
-	res = malloc(sizeof(char *) * (ft_countwords(s, c) + 1));
-	if (!res)
-		return (0);
 	while (*s)
 	{
-		if (*s != c)
+		while (*s == c)
+			s++;
+		if (*s)
 		{
-			len = 0;
-			while (*s && *s != c && ++len)
-				++s;
-			res[i++] = ft_substr(s - len, 0, len);
+			if (!words(strings, &s, c, &i))
+				return (NULL);
 		}
-		else
-			++s;
 	}
-	res[i] = 0;
-	return (res);
+	strings[i] = NULL;
+	return (strings);
 }
+
 /*
 void print_split(char **split_result)
         {

@@ -3,17 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mananton <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: mananton <telesmanuel@hotmail.com>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 13:22:44 by mananton          #+#    #+#              #
-#    Updated: 2024/11/08 13:40:33 by mananton         ###   ########.fr        #
+#    Updated: 2024/11/13 11:23:55 by mananton         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = @cc
 NAME = libft.a
-CFLAGS = -Wall -Wextra -Werror -I.
-HEADERS = ./libft.h
+CFLAGS = -Wall -Wextra -Werror
 SRC = \
       ft_atoi.c ft_isalpha.c ft_itoa.c ft_memmove.c ft_putnbr_fd.c ft_strdup.c \
       ft_strlcpy.c ft_strnstr.c ft_tolower.c ft_bzero.c ft_isascii.c ft_memchr.c \
@@ -30,7 +29,7 @@ HAS_BONUS = no
 
 all: $(NAME)
 
-$(NAME): $(HEADERS) $(OFILES)
+$(NAME): $(OFILES)
 	@ar rcs $(NAME) $(OFILES)
 	@ranlib $(NAME)
 
@@ -41,7 +40,7 @@ bonus: $(OFILES) $(BONUS_OFILES)
 	@ranlib $(NAME)
 	@touch bonus
 
-%.o:%.c $(HEADERS)
+%.o:%.c $
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:

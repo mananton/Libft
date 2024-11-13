@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mananton <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mananton <telesmanuel@hotmail.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/29 11:15:34 by mananton          #+#    #+#             */
-/*   Updated: 2024/10/30 10:36:10 by mananton         ###   ########.fr       */
+/*   Updated: 2024/11/13 11:33:14 by mananton         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <libft.h>
+#include "libft.h"
 
 char	*ft_strrchr(const char *s, int c)
 {
-	unsigned int	i;
-	char			*res;
-	char			cc;
+	int		i;
+	char	*res;
+	char	cc;
 
 	cc = (char) c;
 	res = NULL;
@@ -27,7 +27,7 @@ char	*ft_strrchr(const char *s, int c)
 			res = (char *) &s[i];
 		i++;
 	}
-	if (s[i] == c)
+	if (s[i] == cc)
 		res = (char *) &s[i];
 	return (res);
 }
